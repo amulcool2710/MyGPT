@@ -3,6 +3,7 @@ import Chat from "./Chat.jsx";
 import { MyContext } from "../context/MyContext.jsx";
 import { useContext, useState, useEffect } from "react";
 import {ScaleLoader} from "react-spinners";
+import { chatWithGPT } from "../services/api.js";
 
 function ChatWindow() {
     const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
@@ -14,24 +15,13 @@ function ChatWindow() {
         setNewChat(false);
 
         console.log("message ", prompt, " threadId ", currThreadId);
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: prompt,
-                threadId: currThreadId
-            })
-        };
-
         try {
-            const response = await fetch("http://localhost:8080/api/chat", options);
-            const res = await response.json();
+            const res = await chatWithGPT(prompt, currThreadId);
             console.log(res);
             setReply(res.reply);
         } catch(err) {
-            console.log(err);
+            console.error("Chat error:", err);
+            // Optionally set an error toast/message here
         }
         setLoading(false);
     }

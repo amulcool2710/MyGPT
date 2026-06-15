@@ -2,19 +2,18 @@ import "./Sidebar.css";
 import { useContext, useEffect } from "react";
 import { MyContext } from "../context/MyContext.jsx";
 import {v1 as uuidv1} from "uuid";
+import { fetchAllThreads, fetchThreadChats, deleteThreadById } from "../services/api.js";
 
 function Sidebar() {
     const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
 
     const getAllThreads = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/thread");
-            const res = await response.json();
+            const res = await fetchAllThreads();
             const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
-            //console.log(filteredData);
             setAllThreads(filteredData);
         } catch(err) {
-            console.log(err);
+            console.error("Error fetching threads:", err);
         }
     };
 
@@ -35,21 +34,19 @@ function Sidebar() {
         setCurrThreadId(newThreadId);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`);
-            const res = await response.json();
+            const res = await fetchThreadChats(newThreadId);
             console.log(res);
             setPrevChats(res);
             setNewChat(false);
             setReply(null);
         } catch(err) {
-            console.log(err);
+            console.error("Error loading chat:", err);
         }
     }   
 
     const deleteThread = async (threadId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {method: "DELETE"});
-            const res = await response.json();
+            const res = await deleteThreadById(threadId);
             console.log(res);
 
             //updated threads re-render
@@ -60,7 +57,7 @@ function Sidebar() {
             }
 
         } catch(err) {
-            console.log(err);
+            console.error("Error deleting thread:", err);
         }
     }
 
