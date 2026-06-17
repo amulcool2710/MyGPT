@@ -1,6 +1,6 @@
 let IS_PROD = true;
 const API_BASE_URL = IS_PROD ? 
-    "https://mygpt-backend.onrender.com/api" : 
+    "https://mygpt-2qwq.onrender.com/api" : 
     "http://localhost:8080/api";
 
 const getAuthHeaders = () => {
