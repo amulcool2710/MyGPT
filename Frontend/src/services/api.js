@@ -1,4 +1,7 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
+let IS_PROD = true;
+const API_BASE_URL = IS_PROD ? 
+    "https://mygpt-backend.onrender.com/api" : 
+    "http://localhost:8080/api";
 
 const getAuthHeaders = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));

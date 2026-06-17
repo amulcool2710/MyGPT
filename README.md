@@ -6,6 +6,7 @@
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![MyGPT CI Pipeline](https://github.com/amulcool2710/MyGPT/actions/workflows/main.yml/badge.svg)
 
 ## 🚀 Features & Achievements
 - **Conversational AI:** Integrated external APIs to provide intelligent responses with **99% uptime**.
