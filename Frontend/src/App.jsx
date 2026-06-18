@@ -2,10 +2,13 @@ import './App.css';
 import Sidebar from "./components/Sidebar.jsx";
 import ChatWindow from "./components/ChatWindow.jsx";
 import {MyContext} from "./context/MyContext.jsx";
-import { useState } from 'react';
+import Auth from "./components/Auth.jsx";
+import { AuthContext } from "./context/AuthContext.jsx";
+import { useState, useContext } from 'react';
 import {v1 as uuidv1} from "uuid";
 
 function App() {
+  const { user } = useContext(AuthContext);
   const [prompt, setPrompt] = useState("");
   const [reply, setReply] = useState(null);
   const [currThreadId, setCurrThreadId] = useState(uuidv1());
@@ -21,6 +24,10 @@ function App() {
     prevChats, setPrevChats,
     allThreads, setAllThreads
   }; 
+
+  if (!user) {
+    return <Auth />;
+  }
 
   return (
     <div className='app'>
